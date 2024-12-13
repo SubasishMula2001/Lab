@@ -314,16 +314,802 @@ visualize_clusters(clusters)
                 </div>
             </li>
             
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_5.ipynb" target="_blank">Experiment 5</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_6.ipynb" target="_blank">Experiment 6</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_7_8_9.ipynb" target="_blank">Experiment 7 8 9</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_10.ipynb" target="_blank">Experiment 10</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_11.ipynb" target="_blank">Experiment 11</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_12.ipynb" target="_blank">Experiment 12</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_13.ipynb" target="_blank">Experiment 13</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_14.ipynb" target="_blank">Experiment 14</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_15.ipynb" target="_blank">Experiment 15</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_15_2.ipynb" target="_blank">Experiment 15_2</a></li>
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_5.ipynb" target="_blank">Experiment 5</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp5-desc')">[+]</span>
+                <div id="exp5-desc" class="content">
+                    <strong>Objective:</strong> Visualize and compare the performance of different classifiers using confusion matrices.
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Import necessary libraries.</li>
+                        <li>Load and preprocess the dataset.</li>
+                        <li>Split data into training and test sets.</li>
+                        <li>Initialize classifiers (KNN, Decision Tree, Random Forest, Naive Bayes, SVM).</li>
+                        <li>Train each classifier, make predictions, and generate confusion matrices.</li>
+                        <li>Plot confusion matrices for all classifiers in a single figure.</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode with Real Code:</strong>
+                    <pre>
+            # Step 1: Import required libraries
+            import pandas as pd
+            import numpy as np
+            import seaborn as sns
+            import matplotlib.pyplot as plt
+            from sklearn.model_selection import train_test_split
+            from sklearn.metrics import confusion_matrix
+            from sklearn.neighbors import KNeighborsClassifier
+            from sklearn.tree import DecisionTreeClassifier
+            from sklearn.ensemble import RandomForestClassifier
+            from sklearn.naive_bayes import GaussianNB
+            from sklearn.svm import SVC
+            
+            # Step 2: Load the dataset
+            df = pd.read_csv("refined_mobile_prices.csv")
+            X = df.drop('price_range', axis=1)
+            y = df['price_range']
+            
+            # Step 3: Split the dataset into training and test sets
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            
+            # Step 4: Initialize classifiers
+            classifiers = {
+                'KNN': KNeighborsClassifier(),
+                'Decision Tree': DecisionTreeClassifier(),
+                'Random Forest': RandomForestClassifier(),
+                'Naive Bayes': GaussianNB(),
+                'SVM': SVC()
+            }
+            
+            # Step 5: Set up the plot for confusion matrices
+            plt.figure(figsize=(15, 10))
+            
+            # Step 6: Loop through classifiers and generate confusion matrices
+            for i, (name, clf) in enumerate(classifiers.items()):
+                clf.fit(X_train, y_train)
+                y_pred = clf.predict(X_test)
+                cm = confusion_matrix(y_test, y_pred)
+            
+                # Plot confusion matrix as heatmap
+                plt.subplot(2, 3, i + 1)
+                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False,
+                            xticklabels=np.unique(y), yticklabels=np.unique(y))
+            
+                plt.title(f'{name} Confusion Matrix')
+                plt.xlabel('Predicted Label')
+                plt.ylabel('True Label')
+            
+            # Step 7: Adjust layout and display the plot
+            plt.tight_layout()
+            plt.show()
+                    </pre>
+                    <br>
+                    <strong>Explanation:</strong>
+                    <ul>
+                        <li><strong>Data Preprocessing:</strong> Load the data, split it into features (X) and target variable (y).</li>
+                        <li><strong>Model Training:</strong> Train multiple classifiers (KNN, Decision Tree, Random Forest, Naive Bayes, and SVM) on the training set.</li>
+                        <li><strong>Evaluation:</strong> Generate confusion matrices for each classifier and plot them as heatmaps.</li>
+                        <li><strong>Plotting:</strong> The confusion matrices are visualized in a grid using seaborn for easy comparison.</li>
+                    </ul>
+                    <br>
+                    <strong>Conclusion:</strong> This approach allows for a clear comparison of classifier performance based on confusion matrices, which shows the distribution of true and predicted labels. This helps in evaluating the classification accuracy for each model.
+                </div>
+            </li>
+            
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_6.ipynb" target="_blank">Experiment 6</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp6-desc')">[+]</span>
+                <div id="exp6-desc" class="content">
+                    <strong>Objective:</strong> Identify and select features that are highly correlated with the target variable (Price).
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Load and preprocess the dataset.</li>
+                        <li>Encode categorical variables.</li>
+                        <li>Compute the correlation matrix of features.</li>
+                        <li>Standardize the features for consistency.</li>
+                        <li>Identify features with a strong correlation to the target variable (Price).</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode with Real Code:</strong>
+                    <pre>
+            # Step 1: Import required libraries
+            import pandas as pd
+            from sklearn.preprocessing import LabelEncoder, StandardScaler
+            
+            # Step 2: Load and preprocess the dataset
+            data = pd.read_csv("/content/cars.csv")
+            
+            # Encoding categorical variables
+            lbl = LabelEncoder()
+            data['Brand'] = lbl.fit_transform(data['Brand'])
+            data['Model'] = lbl.fit_transform(data['Model'])
+            data['Fuel_Type'] = lbl.fit_transform(data['Fuel_Type'])
+            data['Transmission'] = lbl.fit_transform(data['Transmission'])
+            data['Owner_Type'] = lbl.fit_transform(data['Owner_Type'])
+            
+            # Step 3: Compute the correlation matrix
+            correlation_matrix = data.corr()
+            
+            # Step 4: Standardize the features for consistency
+            scaler = StandardScaler()
+            scaled_data = scaler.fit_transform(data.drop(columns=['Car_ID']))
+            
+            # Step 5: Identify features with high correlation to 'Price'
+            target_correlation = correlation_matrix['Price'].abs().sort_values(ascending=False)
+            selected_features = target_correlation[target_correlation > 0.5].index
+            
+            print(f"Selected features highly correlated with price: {selected_features}")
+                    </pre>
+                    <br>
+                    <strong>Explanation:</strong>
+                    <ul>
+                        <li><strong>Data Preprocessing:</strong> The categorical columns (Brand, Model, etc.) are encoded using LabelEncoder.</li>
+                        <li><strong>Correlation Analysis:</strong> The correlation matrix is computed for all features, and features with a correlation greater than 0.5 to the target variable (Price) are selected.</li>
+                        <li><strong>Feature Standardization:</strong> StandardScaler is used to scale the features for consistency, though it's not necessary for correlation calculations.</li>
+                    </ul>
+                    <br>
+                    <strong>Conclusion:</strong> Features like Power, Engine, Transmission, and Mileage show a high correlation with the target variable Price. These selected features can be used for further modeling and analysis.
+                </div>
+            </li>
+            
+            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_7_8_9.ipynb" target="_blank">Experiment 7 8 9</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp789-desc')">[+]</span>
+    <div id="exp789-desc" class="content">
+        <strong>Objective:</strong> 
+        To evaluate the performance of two Random Forest models—one using all features and one using selected important features—for predicting car prices. 
+        The objective is to compare the Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared values for each model.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li>Data Preparation: Import and clean the dataset, apply feature engineering (e.g., log transformations, interaction terms), and scale the features.</li>
+            <li>Model Training: Train Random Forest models using all features and selected important features.</li>
+            <li>Model Evaluation: Calculate MSE, RMSE, and R-squared to compare the models' performance.</li>
+            <li>Visualization: Plot Actual vs Predicted price and residuals for both models.</li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+# Prepare dataset
+df = load_and_clean_data()  # Import and clean data
+X_all, y_all = prepare_data(df, use_all_features=True)  # Use all features
+X_imp, y_imp = prepare_data(df, use_all_features=False)  # Use selected important features
+
+# Scale features
+X_all_scaled = scale_features(X_all)
+X_imp_scaled = scale_features(X_imp)
+
+# Train models
+model_all = RandomForestRegressor().fit(X_all_scaled, y_all)
+model_imp = RandomForestRegressor().fit(X_imp_scaled, y_imp)
+
+# Predict and evaluate models
+y_pred_all = model_all.predict(X_all_scaled)
+y_pred_imp = model_imp.predict(X_imp_scaled)
+
+mse_all = mean_squared_error(y_all, y_pred_all)
+rmse_all = np.sqrt(mse_all)
+r2_all = r2_score(y_all, y_pred_all)
+
+mse_imp = mean_squared_error(y_imp, y_pred_imp)
+rmse_imp = np.sqrt(mse_imp)
+r2_imp = r2_score(y_imp, y_pred_imp)
+
+# Print evaluation metrics
+print(f'Model with All Features - MSE: {mse_all}, RMSE: {rmse_all}, R²: {r2_all}')
+print(f'Model with Important Features - MSE: {mse_imp}, RMSE: {rmse_imp}, R²: {r2_imp}')
+        </pre>
+        <br>
+        <strong>Results:</strong>
+        <ul>
+            <li><strong>Model with All Features:</strong></li>
+            <ul>
+                <li>MSE: 7,475,287,500</li>
+                <li>RMSE: 86,459.74</li>
+                <li>R²: 0.99086</li>
+            </ul>
+            <li><strong>Model with Important Features:</strong></li>
+            <ul>
+                <li>MSE: 8,123,700,000</li>
+                <li>RMSE: 90,131.57</li>
+                <li>R²: 0.99007</li>
+            </ul>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong> 
+        Both models performed well, but the model with all features slightly outperformed the one with important features. 
+        The high R² value (close to 1) for both models indicates that the models are effective at predicting car prices. 
+        While the model with important features shows a slight increase in MSE, it still provides a strong prediction performance. 
+        Feature selection helped in reducing complexity while maintaining model accuracy.
+    </div>
+</li>
+
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_10.ipynb" target="_blank">Experiment 10</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp10-desc')">[+]</span>
+    <div id="exp10-desc" class="content">
+        <strong>Objective:</strong> 
+        To perform exploratory data analysis (EDA) on a campaign responses dataset to understand patterns, relationships, and insights from numerical and categorical features.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li>Load Data: Import and inspect the dataset.</li>
+            <li>Data Overview: Check data types, missing values, and basic statistics.</li>
+            <li>Categorical Analysis: Count unique values for categorical variables.</li>
+            <li>Visualization: Plot distributions, relationships, and correlations.</li>
+            <li>Statistical Analysis: Compute skewness, kurtosis, correlation, and covariance.</li>
+            <li>Results: Summarize the findings from the visualizations and analysis.</li>
+            <li>Conclusion: Provide insights and recommendations.</li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv("/content/campaign_responses.csv")
+
+# Data Overview
+print(df.info())
+print(df.describe())
+
+# Count unique values for categorical columns
+print(df['gender'].value_counts())
+print(df['employed'].value_counts())
+print(df['marital_status'].value_counts())
+print(df['responded'].value_counts())
+
+# Visualizing distributions of numerical features
+sns.set(style="whitegrid")
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+# Plot Age distribution
+sns.histplot(df['age'], kde=True, color='skyblue', ax=axes[0])
+axes[0].set_title('Age Distribution')
+
+# Plot Annual Income distribution
+sns.histplot(df['annual_income'], kde=True, color='green', ax=axes[1])
+axes[1].set_title('Annual Income Distribution')
+
+# Plot Credit Score distribution
+sns.histplot(df['credit_score'], kde=True, color='orange', ax=axes[2])
+axes[2].set_title('Credit Score Distribution')
+
+plt.tight_layout()
+plt.show()
+
+# Gender vs Response
+plt.figure(figsize=(6, 4))
+sns.countplot(x='gender', hue='responded', data=df, palette='Set1')
+plt.title('Gender vs Response')
+plt.show()
+
+# Age vs Response (Boxplot)
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='responded', y='age', data=df, palette='Set2')
+plt.title('Age vs Response')
+plt.show()
+
+# Annual Income vs Response (Boxplot)
+plt.figure(figsize=(8, 6))
+sns.boxplot(x='responded', y='annual_income', data=df, palette='Set2')
+plt.title('Annual Income vs Response')
+plt.show()
+
+# Employment Status vs Response
+plt.figure(figsize=(6, 4))
+sns.countplot(x='employed', hue='responded', data=df, palette='bright')
+plt.title('Employment Status vs Response')
+plt.show()
+
+# Scatterplot for Credit Score vs Annual Income (colored by Response)
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='credit_score', y='annual_income', hue='responded', data=df, palette='dark')
+plt.title('Credit Score vs Annual Income (Colored by Response)')
+plt.show()
+
+# Correlation Heatmap
+correlation = df[['age', 'annual_income', 'credit_score', 'no_of_children']].corr()
+plt.figure(figsize=(8, 6))
+sns.heatmap(correlation, annot=True, cmap='coolwarm', fmt='.2f', linewidths=0.5)
+plt.title('Correlation Heatmap')
+plt.show()
+
+# Skewness and Kurtosis
+skewness = df[['age', 'annual_income', 'credit_score', 'no_of_children']].skew()
+kurtosis = df[['age', 'annual_income', 'credit_score', 'no_of_children']].kurtosis()
+
+print("Skewness:\n", skewness)
+print("\nKurtosis:\n", kurtosis)
+
+# Correlation and Covariance Matrices
+correlation_matrix = df[['age', 'annual_income', 'credit_score', 'no_of_children']].corr()
+covariance_matrix = df[['age', 'annual_income', 'credit_score', 'no_of_children']].cov()
+
+print("Correlation Matrix:\n", correlation_matrix)
+print("\nCovariance Matrix:\n", covariance_matrix)
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li>Insights into the distributions and relationships of features like age, annual income, credit score, and employment status.</li>
+            <li>Identification of key factors affecting the response (e.g., income, gender, marital status).</li>
+            <li>Visual representations help in understanding the dataset's structure and potential trends.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong> 
+        The EDA process reveals valuable patterns that can inform targeted marketing strategies, such as adjusting campaigns based on age, income, or employment status. 
+        The analysis also highlights areas where further data preprocessing may be necessary.
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_11.ipynb" target="_blank">Experiment 11</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp11-desc')">[+]</span>
+    <div id="exp11-desc" class="content">
+        <strong>Objective:</strong>
+        To perform exploratory data analysis (EDA) on a campaign responses dataset using Python. The analysis includes handling missing values, detecting outliers, and conducting both univariate and bivariate analyses to uncover insights.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li>Load the Data: Import the dataset using pandas.</li>
+            <li>EDA:
+                <ul>
+                    <li>Check dataset info and summary statistics.</li>
+                    <li>Handle missing values and visualize them.</li>
+                    <li>Detect outliers using IQR and Z-score methods.</li>
+                    <li>Conduct univariate analysis (distribution for numerical, count for categorical variables).</li>
+                </ul>
+            </li>
+            <li>Visualizations: Use box plots, histograms, and correlation heatmaps.</li>
+            <li>Bivariate Analysis: Explore relationships between variables through scatter plots and box plots.</li>
+            <li>Chi-Square Test: Check relationships between categorical variables.</li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from scipy.stats import zscore, chi2_contingency
+
+# Load dataset
+df = pd.read_csv('campaign_responses.csv')
+
+# Handle missing data
+missing_data = df.isnull().sum()
+fill_missing_values(df)
+
+# Outlier detection
+outliers = detect_outliers(df)
+
+# Visualize distributions
+plot_distributions(df)
+
+# Calculate correlations
+correlation_matrix = df.corr()
+sns.heatmap(correlation_matrix)
+
+# Chi-square test for categorical variables
+perform_chi_square_test(df)
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li>Data Inspection: Identified missing values, outliers, and descriptive statistics.</li>
+            <li>Outliers: Detected outliers using IQR and Z-score methods for numerical variables.</li>
+            <li>Visualization: Displayed univariate distributions and correlations using appropriate plots.</li>
+            <li>Statistical Tests: Performed Chi-square tests for categorical variables to check dependencies.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong> 
+        EDA provides a comprehensive understanding of the dataset, identifying missing values, outliers, and relationships between variables. This prepares the dataset for further analysis, model building, or insights extraction.
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_12.ipynb" target="_blank">Experiment 12: Feature Engineering and Correlation Analysis on Campaign Responses</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp12-desc')">[+]</span>
+    <div id="exp12-desc" class="content">
+        <strong>Objective:</strong>
+        To perform feature engineering and correlation analysis on a campaign responses dataset, including the creation of a new feature and visualizing relationships between numerical variables.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li>Load Data: Read the CSV file using pandas.</li>
+            <li>Feature Engineering:
+                <ul>
+                    <li>Calculate <code>income_per_dependent</code> by dividing <code>annual_income</code> by the number of dependents (<code>no_of_children</code>) plus one.</li>
+                </ul>
+            </li>
+            <li>Correlation Matrix:
+                <ul>
+                    <li>Compute correlations between numerical features and visualize them using a heatmap.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+data = pd.read_csv('campaign_responses.csv')
+
+# Feature engineering
+data['income_per_dependent'] = data['annual_income'] / (data['no_of_children'] + 1)
+
+# Compute correlation matrix
+correlation_matrix = data.corr(numeric_only=True)
+
+# Visualize correlation matrix
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+plt.show()
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li>Feature Engineering: The new feature <code>income_per_dependent</code> was successfully added.</li>
+            <li>Correlation Analysis: The correlation matrix was computed and visualized to identify relationships between numerical variables, revealing patterns in the dataset.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        Feature engineering enhanced the dataset by adding a new, meaningful variable. The correlation matrix visualization provided insights into how numerical features are related, which can guide further analysis or modeling steps.
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_13.ipynb" target="_blank">Experiment 13: Evaluating Machine Learning Classifiers on Campaign Responses</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp13-desc')">[+]</span>
+    <div id="exp13-desc" class="content">
+        <strong>Objective:</strong>
+        To evaluate the performance of multiple machine learning classifiers (Logistic Regression, Decision Tree, Random Forest, SVM, KNN, Gradient Boosting) on a campaign responses dataset, focusing on classification metrics.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li><strong>Data Preprocessing:</strong>
+                <ul>
+                    <li>Encoding categorical variables.</li>
+                    <li>Splitting the dataset into features and target.</li>
+                    <li>Standardizing the features.</li>
+                </ul>
+            </li>
+            <li><strong>Modeling:</strong> 
+                <ul>
+                    <li>Apply Logistic Regression, Decision Tree, Random Forest, SVM, KNN, and Gradient Boosting.</li>
+                </ul>
+            </li>
+            <li><strong>Evaluation:</strong>
+                <ul>
+                    <li>Evaluate each model using metrics such as Confusion Matrix, Precision, Recall, F1-Score, and Accuracy.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import confusion_matrix, precision_score, recall_score, f1_score, accuracy_score
+
+# Load and preprocess data
+df = pd.read_csv("campaign_responses.csv")
+label_encoder = LabelEncoder()
+df['gender'] = label_encoder.fit_transform(df['gender'])
+df['marital_status'] = label_encoder.fit_transform(df['marital_status'])
+df['employed'] = label_encoder.fit_transform(df['employed'])
+X = df.drop(columns=['customer_id', 'responded'])
+y = df['responded']
+
+# Split and scale data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+scaler = StandardScaler()
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transform(X_test)
+
+# Models and Evaluation
+models = [LogisticRegression(), DecisionTreeClassifier(), RandomForestClassifier(), SVC(), KNeighborsClassifier(), GradientBoostingClassifier()]
+for model in models:
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    print(f"{model.__class__.__name__} Metrics:")
+    print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
+    print(f"Precision: {precision_score(y_test, y_pred):.2f}, Recall: {recall_score(y_test, y_pred):.2f}, F1-Score: {f1_score(y_test, y_pred):.2f}, Accuracy: {accuracy_score(y_test, y_pred):.2f}")
+    print("\n")
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li><strong>Data Preprocessing:</strong> Categorical features (gender, marital_status, employed) were encoded using LabelEncoder. The dataset was split into features and target variables, and scaled using StandardScaler.</li>
+            <li><strong>Model Performance:</strong> Six machine learning models were trained and evaluated using classification metrics. Confusion matrix, precision, recall, F1-score, and accuracy were computed for each model to evaluate their effectiveness in predicting campaign responses.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        Multiple classifiers were applied, and the performance of each model was measured. The model with the best performance can be chosen based on evaluation metrics for practical use.
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_14.ipynb" target="_blank">Experiment 14: Comparison of Machine Learning Models Using ROC Curves and Metrics</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp14-desc')">[+]</span>
+    <div id="exp14-desc" class="content">
+        <strong>Objective:</strong>
+        To compare the performance of six machine learning models (Logistic Regression, Decision Tree, Random Forest, SVM, KNN, and Gradient Boosting) using various classification metrics, including ROC curves, F1-Score, and AUC, to determine the best model.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li><strong>Data Preprocessing:</strong>
+                <ul>
+                    <li>Encoding categorical variables, splitting data into features and target, scaling the features.</li>
+                </ul>
+            </li>
+            <li><strong>Model Training and Evaluation:</strong> 
+                <ul>
+                    <li>Train the models, predict on the test set, and compute various metrics (accuracy, precision, recall, F1-Score, ROC AUC).</li>
+                </ul>
+            </li>
+            <li><strong>ROC Curve Plotting:</strong> 
+                <ul>
+                    <li>Plot the ROC curve for each model, compare their AUC values.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.metrics import precision_score, recall_score, f1_score, accuracy_score, roc_curve, auc
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.svm import SVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+
+# Initialize models
+models = {"Logistic Regression": LogisticRegression(), "Decision Tree": DecisionTreeClassifier(), "Random Forest": RandomForestClassifier(),
+          "SVM": SVC(probability=True), "KNN": KNeighborsClassifier(), "Gradient Boosting": GradientBoostingClassifier()}
+
+# Train models and calculate metrics
+results = []
+for model_name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    cm = confusion_matrix(y_test, y_pred)
+    precision = precision_score(y_test, y_pred)
+    recall = recall_score(y_test, y_pred)
+    f1 = f1_score(y_test, y_pred)
+    accuracy = accuracy_score(y_test, y_pred)
+    results.append({"Model": model_name, "Accuracy": accuracy, "Precision": precision, "Recall": recall, "F1-Score": f1})
+
+# Display results
+results_df = pd.DataFrame(results)
+print(results_df)
+
+# Plot ROC curves for each model
+plt.figure(figsize=(10, 8))
+for model_name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred_prob = model.predict_proba(X_test)[:, 1]
+    fpr, tpr, _ = roc_curve(y_test, y_pred_prob)
+    roc_auc = auc(fpr, tpr)
+    plt.plot(fpr, tpr, label=f"{model_name} (AUC = {roc_auc:.2f})")
+plt.plot([0, 1], [0, 1], 'k--', label="Random Guess")
+plt.title("ROC Curve Comparison")
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.legend(loc="lower right")
+plt.grid(True)
+plt.show()
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li><strong>Model Training and Evaluation:</strong> The models were trained and evaluated, showing their classification performance. The comparative analysis results help identify which model has the highest F1-Score or Accuracy, based on the evaluation metrics.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        <ul>
+            <li><strong>Best Model:</strong> The Gradient Boosting model achieved the highest AUC and F1-Score, indicating superior performance.</li>
+            <li><strong>ROC Curve:</strong> A visual comparison of models shows that Gradient Boosting and Random Forest perform well with higher AUC values.</li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_15.ipynb" target="_blank">Experiment 15: Model Training with Random Forest, Feature Selection, Cross-Validation, and Regularization</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp15-desc')">[+]</span>
+    <div id="exp15-desc" class="content">
+        <strong>Objective:</strong>
+        To analyze the given datasets, perform various checks such as class distribution, model training with Random Forest, feature selection, cross-validation, learning curve, and regularization, and evaluate the model's performance.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li><strong>Data Preprocessing:</strong>
+                <ul>
+                    <li>Load and preprocess datasets.</li>
+                    <li>Visualize class distribution.</li>
+                    <li>Check for class imbalance.</li>
+                </ul>
+            </li>
+            <li><strong>Model Training:</strong> 
+                <ul>
+                    <li>Train Random Forest models on the dataset.</li>
+                    <li>Evaluate with metrics like accuracy and error rate.</li>
+                </ul>
+            </li>
+            <li><strong>Feature Importance & Selection:</strong>
+                <ul>
+                    <li>Identify important features.</li>
+                    <li>Reduce feature space based on importance.</li>
+                </ul>
+            </li>
+            <li><strong>Cross-Validation & Learning Curve:</strong> 
+                <ul>
+                    <li>Use cross-validation for model performance assessment.</li>
+                    <li>Plot learning curves to assess model performance over different training sizes.</li>
+                </ul>
+            </li>
+            <li><strong>Regularization:</strong> 
+                <ul>
+                    <li>Apply regularization techniques for better generalization.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+# Load the data
+df = pd.read_csv('/content/campaign_responses.csv')
+df1 = pd.read_csv('/content/train.csv')
+
+# Visualize the class distribution
+sns.countplot(data=df, x='responded')
+plt.show()
+
+# Train Random Forest model
+x = df.drop(columns=['responded'])
+y = df['responded']
+x_train, x_test, y_train, y_test = train_test_split(x, y)
+model = RandomForestClassifier()
+model.fit(x_train, y_train)
+
+# Evaluate the model
+y_pred = model.predict(x_test)
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+# Cross-validation
+cv_scores = cross_val_score(model, X, y, cv=5)
+print("CV Accuracy:", cv_scores.mean())
+
+# Learning curve
+train_sizes, train_scores, test_scores = learning_curve(model, X, y)
+plt.plot(train_sizes, train_scores.mean(axis=1), label='Train')
+plt.plot(train_sizes, test_scores.mean(axis=1), label='Test')
+plt.show()
+        </pre>
+        <br>
+        <strong>Result:</strong>
+        <ul>
+            <li><strong>Class Distribution:</strong> The dataset's target variable was visualized and assessed for balance. If any class had less than 20%, the dataset was considered imbalanced.</li>
+            <li><strong>Model Performance:</strong> The Random Forest model achieved reasonable accuracy, and results were cross-validated.</li>
+            <li><strong>Feature Importance:</strong> Key features were selected based on importance, improving the model’s efficiency.</li>
+            <li><strong>Learning Curves:</strong> Plotted to observe training and testing accuracy as training set size increased.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        <ul>
+            <li><strong>Balanced Dataset:</strong> The dataset was balanced, with no major imbalance detected.</li>
+            <li><strong>Effective Model:</strong> Random Forest showed good predictive power and improved with feature selection.</li>
+            <li><strong>Regularization Impact:</strong> Applying regularization helped reduce overfitting.</li>
+        </ul>
+    </div>
+</li>
+<li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_15_2.ipynb" target="_blank">Experiment 15_2: Data Analysis with Random Forest, Feature Selection, SMOTE, Regularization, and Noise Augmentation</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp15_2-desc')">[+]</span>
+    <div id="exp15_2-desc" class="content">
+        <strong>Objective:</strong>
+        To analyze datasets (credit_dataset.csv and heart.csv) using machine learning techniques such as Random Forest, feature selection, cross-validation, learning curves, regularization, and noise augmentation for improving model performance.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li><strong>Data Preprocessing:</strong> 
+                <ul>
+                    <li>Encode categorical variables.</li>
+                    <li>Check class distribution.</li>
+                </ul>
+            </li>
+            <li><strong>Model Training:</strong> 
+                <ul>
+                    <li>Use Random Forest to train models on the datasets.</li>
+                </ul>
+            </li>
+            <li><strong>Handling Class Imbalance:</strong> 
+                <ul>
+                    <li>Apply SMOTE to balance the class distribution.</li>
+                </ul>
+            </li>
+            <li><strong>Evaluation:</strong> 
+                <ul>
+                    <li>Compute accuracy, error, and cross-validation scores.</li>
+                    <li>Plot learning curves.</li>
+                </ul>
+            </li>
+            <li><strong>Feature Importance:</strong> 
+                <ul>
+                    <li>Select important features and evaluate performance on the reduced feature set.</li>
+                </ul>
+            </li>
+            <li><strong>Regularization:</strong> 
+                <ul>
+                    <li>Apply regularization techniques to improve generalization.</li>
+                </ul>
+            </li>
+            <li><strong>Augmentation:</strong> 
+                <ul>
+                    <li>Add noise to the data and evaluate performance.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+# Load and preprocess the data
+df = pd.read_csv('credit_dataset.csv')
+X = df.drop(columns=['Unnamed: 0', 'ID', 'TARGET'])
+y = df['TARGET']
+
+# Encode categorical features
+label_encoder = LabelEncoder()
+for column in X.select_dtypes(include=['object']).columns:
+    X[column] = label_encoder.fit_transform(X[column])
+
+# Split the data into train and test sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Handle class imbalance using SMOTE
+smote = SMOTE(random_state=42)
+X_train_smote, y_train_smote = smote.fit_resample(X_train, y_train)
+
+# Train the Random Forest model
+model = RandomForestClassifier(random_state=42)
+model.fit(X_train_smote, y_train_smote)
+
+# Evaluate model performance
+train_predictions = model.predict(X_train_smote)
+test_predictions = model.predict(X_test)
+train_accuracy = accuracy_score(y_train_smote, train_predictions)
+test_accuracy = accuracy_score(y_test, test_predictions)
+        </pre>
+        <br>
+        <strong>Results:</strong>
+        <ul>
+            <li><strong>Class Distribution:</strong> Checked before and after applying SMOTE.</li>
+            <li><strong>Model Performance:</strong> Random Forest classifier achieved reasonable accuracy on both train and test datasets, with improvements from handling class imbalance.</li>
+            <li><strong>Cross-validation:</strong> Evaluated the model's stability with 5-fold cross-validation.</li>
+            <li><strong>Learning Curves:</strong> Plotted to assess training and validation performance as the dataset size increased.</li>
+            <li><strong>Feature Selection:</strong> Reduced features based on importance and tested model performance on the reduced set.</li>
+            <li><strong>Regularization:</strong> Applied constraints (e.g., max depth, min samples) to improve model generalization.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        <ul>
+            <li><strong>Class Balance:</strong> SMOTE helped balance the dataset, improving model performance on the minority class.</li>
+            <li><strong>Model Accuracy:</strong> Random Forest performed well on both training and test sets, but regularization further improved results.</li>
+            <li><strong>Feature Importance:</strong> Reducing features based on importance led to similar performance with fewer features, indicating effective feature selection.</li>
+            <li><strong>Noise Augmentation:</strong> Introducing noise improved model robustness, showing the model's ability to generalize better.</li>
+        </ul>
+    </div>
+</li>
         </ul>
     </div>
 </body>
