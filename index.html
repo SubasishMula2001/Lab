@@ -25,6 +25,17 @@
             font-weight: bold;
         }
     </style>
+     <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const password = "1234"; // Set your password here
+      const userPassword = prompt("Please enter the password to access this page:");
+
+      if (userPassword !== password) {
+        alert("Incorrect password. Redirecting...");
+        window.location.href = "https://kp12.netlify.app"; // Redirect if password is wrong
+      }
+    });
+  </script>
     <script>
         function toggleDescription(experimentId) {
             var content = document.getElementById(experimentId);
