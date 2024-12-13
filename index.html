@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nothing</title>
     <style>
-      
         a {
             text-decoration: none;
             color: #007bff;
@@ -14,15 +13,307 @@
         a:hover {
             color: #0056b3;
         }
+        .content {
+            display: none;
+            margin-left: 20px;
+            font-size: 16px;
+        }
+        .toggle-btn {
+            cursor: pointer;
+            color: #007bff;
+            font-size: 16px;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        function toggleDescription(experimentId) {
+            var content = document.getElementById(experimentId);
+            if (content.style.display === "none") {
+                content.style.display = "block";
+            } else {
+                content.style.display = "none";
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <ul>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_1.ipynb" target="_blank">Experiment 1</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_2.ipynb" target="_blank">Experiment 2</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_3.ipynb" target="_blank">Experiment 3</a></li>
-            <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_4.ipynb" target="_blank">Experiment 4</a></li>
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_1.ipynb" target="_blank">Experiment 1</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp1-desc')">[+]</span>
+                <div id="exp1-desc" class="content">
+                    <strong>Objective:</strong> The objective of this experiment is to implement the K-means clustering algorithm, which is used to group a set of data points into clusters based on their feature similarities. The goal is to demonstrate the concept of unsupervised learning and evaluate the results of clustering based on different values of 'k.'
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Load the dataset.</li>
+                        <li>Preprocess the data (handle missing values, normalize if required).</li>
+                        <li>Implement the K-means clustering algorithm.</li>
+                        <li>Apply the algorithm with different values of 'k.'</li>
+                        <li>Visualize the clusters formed.</li>
+                        <li>Evaluate the performance of clustering based on metrics (e.g., silhouette score, inertia).</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode:</strong>
+                    <pre>
+# Load dataset
+data = load_data()
+
+# Preprocess data
+data_cleaned = preprocess_data(data)
+
+# Define K-means algorithm
+def k_means(data, k):
+    centroids = initialize_centroids(k)
+    for iteration in range(max_iterations):
+        clusters = assign_clusters(data, centroids)
+        centroids = update_centroids(data, clusters)
+    return clusters, centroids
+
+# Apply K-means with different k values
+k = 3
+clusters, centroids = k_means(data_cleaned, k)
+
+# Visualize the clusters
+visualize_clusters(clusters)
+                    </pre>
+                    <br>
+                    <strong>Result Explanation:</strong> The K-means algorithm successfully divides the dataset into 'k' clusters. By varying the value of 'k', we can observe how the quality and number of clusters change. For example, with k=3, we can visually inspect the dataset and see how the algorithm has grouped similar data points together. The inertia value and silhouette score are used to assess the quality of clustering.
+                    <br><br>
+                    <strong>Conclusion:</strong> In conclusion, the K-means clustering algorithm efficiently groups data into clusters based on feature similarities. The choice of 'k' significantly impacts the clustering results. Proper evaluation and visualization of the clusters help in understanding the underlying patterns in the data.
+                </div>
+            </li>
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_2.ipynb" target="_blank">Experiment 2</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp2-desc')">[+]</span>
+                <div id="exp2-desc" class="content">
+                    <strong>Objective:</strong> The objective of this experiment is to preprocess and clean a dataset of mobile phones. This involves handling missing values, detecting outliers, and visualizing the data to better understand its structure and relationships.
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Load the dataset using pandas from a CSV file.</li>
+                        <li>Inspect the data using .head() and .info() to understand its structure.</li>
+                        <li>Check for missing values and visualize them using a heatmap.</li>
+                        <li>Handle missing values by filling them with the mean for numerical columns.</li>
+                        <li>Detect and visualize outliers using Z-scores and IQR.</li>
+                        <li>Visualize the outliers using box plots and scatter plots.</li>
+                        <li>Remove or cap outliers by using thresholds based on IQR.</li>
+                        <li>Save the cleaned dataset to a new CSV file.</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode:</strong>
+                    <pre>
+            import pandas as pd
+            import numpy as np
+            import seaborn as sns
+            import matplotlib.pyplot as plt
+            from scipy import stats
+            
+            # Load the dataset
+            df = pd.read_csv('train.csv')
+            
+            # Inspect the data
+            print(df.head())
+            print(df.info())
+            
+            # Check for missing values
+            missing_values = df.isnull().sum()
+            
+            # Visualize missing data
+            sns.heatmap(df.isnull(), cbar=False, cmap='viridis')
+            
+            # Handle missing values
+            df['price_range'] = df['price_range'].fillna(df['price_range'].mean())
+            
+            # Detect outliers using Z-scores
+            z_scores = stats.zscore(df.select_dtypes(include=['float64', 'int64']))
+            abs_z_scores = abs(z_scores)
+            threshold = 3
+            outliers = (abs_z_scores > threshold).any(axis=1)
+            
+            # Visualize outliers using a boxplot
+            sns.boxplot(x=df['price_range'])
+            
+            # Detect outliers using IQR method
+            Q1 = df['price_range'].quantile(0.25)
+            Q3 = df['price_range'].quantile(0.75)
+            IQR = Q3 - Q1
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+            
+            # Remove or cap outliers
+            df['price_range'] = df['price_range'].clip(lower=lower_bound, upper=upper_bound)
+            
+            # Save the cleaned dataset
+            df.to_csv('refined_mobile_prices.csv', index=False)
+                    </pre>
+                    <br>
+                    <strong>Result Explanation:</strong> After filling missing values and detecting outliers, we refined the dataset by removing or capping outliers. The final cleaned data has no missing values, and all outliers have been handled. The heatmap visualized the missing values, and the boxplot showed the presence of outliers before and after handling them. The refined dataset was saved to a new CSV file for further analysis.
+                    <br><br>
+                    <strong>Conclusion:</strong> This experiment demonstrated data preprocessing techniques, including handling missing values and detecting/removing outliers. Proper data cleaning is crucial for improving the performance of machine learning models, ensuring the dataset is free from errors and inconsistencies.
+                </div>
+            </li>            
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_3.ipynb" target="_blank">Experiment 3</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp3-desc')">[+]</span>
+                <div id="exp3-desc" class="content">
+                    <strong>Objective:</strong> The goal of this experiment is to apply multiple classification models (KNN, Decision Tree, Random Forest, Naive Bayes, and SVM) to predict the price range of mobile devices based on various features.
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Data Preprocessing: Load the dataset, handle missing values, and refine the data.</li>
+                        <li>Feature Selection: Identify independent variables (X) and dependent variable (y) – price range.</li>
+                        <li>Model Training: Train each classifier using training data.</li>
+                        <li>Model Evaluation: Evaluate models on the test set using accuracy and precision.</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode:</strong>
+                    <pre>
+            # Step 1: Import required libraries
+            import pandas as pd
+            from sklearn.model_selection import train_test_split
+            from sklearn.neighbors import KNeighborsClassifier
+            from sklearn.tree import DecisionTreeClassifier
+            from sklearn.ensemble import RandomForestClassifier
+            from sklearn.naive_bayes import GaussianNB
+            from sklearn.svm import SVC
+            from sklearn.metrics import precision_score
+            
+            # Step 2: Load and preprocess the dataset
+            df = pd.read_csv("refined_mobile_prices.csv")
+            X = df.drop('price_range', axis=1)  # Features
+            y = df['price_range']  # Target variable
+            
+            # Step 3: Split the data into training and testing sets
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            
+            # Step 4: Initialize classifiers
+            classifiers = {
+                'KNN': KNeighborsClassifier(),
+                'Decision Tree': DecisionTreeClassifier(),
+                'Random Forest': RandomForestClassifier(),
+                'Naive Bayes': GaussianNB(),
+                'SVM': SVC()
+            }
+            
+            # Step 5: Train models, make predictions, and calculate precision
+            for name, clf in classifiers.items():
+                # Train the classifier
+                clf.fit(X_train, y_train)
+            
+                # Make predictions on the test set
+                y_pred = clf.predict(X_test)
+            
+                # Calculate precision
+                precision = precision_score(y_test, y_pred, average='weighted')  # Use 'weighted' for multi-class
+                print(f'{name} Precision: {precision:.2f}')
+                    </pre>
+                    <br>
+                    <strong>Results:</strong>
+                    <ul>
+                        <li>KNN: Precision = 0.94</li>
+                        <li>Decision Tree: Precision = 0.84</li>
+                        <li>Random Forest: Precision = 0.88</li>
+                        <li>Naive Bayes: Precision = 0.81</li>
+                        <li>SVM: Precision = 0.97</li>
+                    </ul>
+                    <br>
+                    <strong>Conclusion:</strong> SVM outperforms other models in terms of precision. Decision Tree and Random Forest also performed well with high accuracy, while KNN showed a balanced performance. Naive Bayes had lower precision compared to the other classifiers.
+                </div>
+            </li>
+            <li>
+                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_4.ipynb" target="_blank">Experiment 4</a>
+                <span class="toggle-btn" onclick="toggleDescription('exp4-desc')">[+]</span>
+                <div id="exp4-desc" class="content">
+                    <strong>Objective:</strong> To compare the performance of five machine learning classifiers (KNN, Decision Tree, Random Forest, Naive Bayes, and SVM) by plotting their accuracy and visualizing confusion matrices.
+                    <br><br>
+                    <strong>Flow:</strong>
+                    <ol>
+                        <li>Load Data: Import necessary libraries and load the dataset.</li>
+                        <li>Split Data: Divide the data into training and testing sets.</li>
+                        <li>Initialize Classifiers: Define the models for KNN, Decision Tree, Random Forest, Naive Bayes, and SVM.</li>
+                        <li>Train and Evaluate: Train each classifier, predict on the test set, calculate accuracy, and plot confusion matrices.</li>
+                        <li>Visualize Results: Use bar plots to compare classifier accuracies and heatmaps for confusion matrices.</li>
+                    </ol>
+                    <br>
+                    <strong>Pseudocode with Real Code:</strong>
+                    <pre>
+            # Step 1: Import required libraries
+            import pandas as pd
+            import numpy as np
+            import seaborn as sns
+            import matplotlib.pyplot as plt
+            from sklearn.model_selection import train_test_split
+            from sklearn.metrics import confusion_matrix
+            from sklearn.neighbors import KNeighborsClassifier
+            from sklearn.tree import DecisionTreeClassifier
+            from sklearn.ensemble import RandomForestClassifier
+            from sklearn.naive_bayes import GaussianNB
+            from sklearn.svm import SVC
+            
+            # Step 2: Load and preprocess the dataset
+            df = pd.read_csv("refined_mobile_prices.csv")
+            X = df.drop('price_range', axis=1)
+            y = df['price_range']
+            
+            # Step 3: Split the dataset into training and testing sets
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+            
+            # Step 4: Initialize classifiers
+            classifiers = {
+                'KNN': KNeighborsClassifier(),
+                'Decision Tree': DecisionTreeClassifier(),
+                'Random Forest': RandomForestClassifier(),
+                'Naive Bayes': GaussianNB(),
+                'SVM': SVC()
+            }
+            
+            # Step 5: Plot classifier accuracies
+            classifiers_names = list(classifiers.keys())
+            accuracies = []
+            
+            for clf in classifiers.values():
+                clf.fit(X_train, y_train)
+                accuracies.append(clf.score(X_test, y_test))
+            
+            # Plot bar graph for classifier accuracies
+            plt.figure(figsize=(10, 6))
+            sns.barplot(x=classifiers_names, y=accuracies, palette='viridis')
+            plt.title('Comparison of Classifier Accuracies', fontsize=16)
+            plt.xlabel('Classifier', fontsize=14)
+            plt.ylabel('Accuracy', fontsize=14)
+            plt.ylim(0, 1)
+            plt.show()
+            
+            # Step 6: Plot confusion matrix for each classifier
+            plt.figure(figsize=(15, 10))
+            for i, (name, clf) in enumerate(classifiers.items()):
+                clf.fit(X_train, y_train)
+                y_pred = clf.predict(X_test)
+                cm = confusion_matrix(y_test, y_pred)
+            
+                plt.subplot(2, 3, i + 1)
+                sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', cbar=False, 
+                            xticklabels=np.unique(y), yticklabels=np.unique(y))
+                plt.title(f'{name} Confusion Matrix')
+                plt.xlabel('Predicted Label')
+                plt.ylabel('True Label')
+            
+            plt.tight_layout()
+            plt.show()
+                    </pre>
+                    <br>
+                    <strong>Result Explanation:</strong>
+                    <ul>
+                        <li><strong>Bar Plot:</strong> The bar plot compares the accuracy of each classifier.</li>
+                        <li><strong>Confusion Matrix:</strong> Heatmaps represent the performance of each classifier, showing true vs. predicted values. The matrix helps visualize how well the model predicts each class.</li>
+                    </ul>
+                    <br>
+                    <strong>Conclusion:</strong> The experiment successfully compares the performance of five classifiers based on accuracy and confusion matrices. From the results, the model with the highest accuracy can be chosen for deployment, while confusion matrices help identify specific misclassifications for further model improvement.
+                </div>
+            </li>
+            
             <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_5.ipynb" target="_blank">Experiment 5</a></li>
             <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_6.ipynb" target="_blank">Experiment 6</a></li>
             <li><a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_7_8_9.ipynb" target="_blank">Experiment 7 8 9</a></li>
