@@ -50,52 +50,109 @@
 <body>
     <div class="container">
         <ul>
-            <li>
-                <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_1.ipynb" target="_blank">Experiment 1</a>
-                <span class="toggle-btn" onclick="toggleDescription('exp1-desc')">[+]</span>
-                <div id="exp1-desc" class="content">
-                    <strong>Objective:</strong> The objective of this experiment is to implement the K-means clustering algorithm, which is used to group a set of data points into clusters based on their feature similarities. The goal is to demonstrate the concept of unsupervised learning and evaluate the results of clustering based on different values of 'k.'
-                    <br><br>
-                    <strong>Flow:</strong>
-                    <ol>
-                        <li>Load the dataset.</li>
-                        <li>Preprocess the data (handle missing values, normalize if required).</li>
-                        <li>Implement the K-means clustering algorithm.</li>
-                        <li>Apply the algorithm with different values of 'k.'</li>
-                        <li>Visualize the clusters formed.</li>
-                        <li>Evaluate the performance of clustering based on metrics (e.g., silhouette score, inertia).</li>
-                    </ol>
-                    <br>
-                    <strong>Pseudocode:</strong>
-                    <pre>
-# Load dataset
-data = load_data()
-
-# Preprocess data
-data_cleaned = preprocess_data(data)
-
-# Define K-means algorithm
-def k_means(data, k):
-    centroids = initialize_centroids(k)
-    for iteration in range(max_iterations):
-        clusters = assign_clusters(data, centroids)
-        centroids = update_centroids(data, clusters)
-    return clusters, centroids
-
-# Apply K-means with different k values
-k = 3
-clusters, centroids = k_means(data_cleaned, k)
-
-# Visualize the clusters
-visualize_clusters(clusters)
-                    </pre>
-                    <br>
-                    <strong>Result Explanation:</strong> The K-means algorithm successfully divides the dataset into 'k' clusters. By varying the value of 'k', we can observe how the quality and number of clusters change. For example, with k=3, we can visually inspect the dataset and see how the algorithm has grouped similar data points together. The inertia value and silhouette score are used to assess the quality of clustering.
-                    <br><br>
-                    <strong>Conclusion:</strong> In conclusion, the K-means clustering algorithm efficiently groups data into clusters based on feature similarities. The choice of 'k' significantly impacts the clustering results. Proper evaluation and visualization of the clusters help in understanding the underlying patterns in the data.
-                </div>
+           <li>
+    <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_1.ipynb" target="_blank">Experiment 1: Exploring and Analyzing train.csv Dataset</a>
+    <span class="toggle-btn" onclick="toggleDescription('exp1-desc')">[+]</span>
+    <div id="exp1-desc" class="content">
+        <strong>Objective:</strong>
+        To explore and analyze the train.csv dataset for insights, focusing on feature distributions, correlation analysis, and visualizations of relationships between variables.
+        <br><br>
+        <strong>Flow:</strong>
+        <ol>
+            <li><strong>Dataset Overview:</strong> 
+                <ul>
+                    <li>Load and display the dataset.</li>
+                    <li>Summarize statistics, data types, and null values.</li>
+                </ul>
             </li>
-            <li>
+            <li><strong>Feature Analysis:</strong> 
+                <ul>
+                    <li>Identify unique values in categorical features.</li>
+                    <li>Visualize distributions using histograms, KDE, and box plots.</li>
+                </ul>
+            </li>
+            <li><strong>Correlation Analysis:</strong> 
+                <ul>
+                    <li>Compute and visualize the correlation matrix using a heatmap.</li>
+                </ul>
+            </li>
+            <li><strong>Feature Relationships:</strong> 
+                <ul>
+                    <li>Scatter plot specific features (three_g vs. four_g).</li>
+                </ul>
+            </li>
+            <li><strong>Automated Visualization:</strong> 
+                <ul>
+                    <li>Create a function to generate histograms and box plots for all features.</li>
+                </ul>
+            </li>
+        </ol>
+        <br>
+        <strong>Pseudocode:</strong>
+        <pre>
+# Import necessary libraries
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# Load data
+df = pd.read_csv("train.csv")
+
+# Overview of dataset
+print(df.head())
+print(df.describe())
+print(df.dtypes)
+print(df.isnull().sum())
+
+# Analyze unique values and target distribution
+print(df.nunique())
+sns.histplot(df['price_range'], bins=30, kde=True)
+plt.title('Price Distribution')
+plt.xlabel('Price')
+plt.ylabel('Frequency')
+plt.show()
+
+# Correlation matrix
+correlation_matrix = df.corr()
+plt.figure(figsize=(15, 15))
+sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", fmt=".2f", square=True)
+plt.title("Correlation Plot")
+plt.show()
+
+# Scatter plot: Three_G vs Four_G
+df.plot.scatter(x="three_g", y="four_g")
+
+# Function to visualize feature distributions
+def plot_feature_distributions(data):
+    features = data.columns.tolist()
+    num_features = len(features)
+    fig, axes = plt.subplots(num_features, 2, figsize=(12, 5 * num_features))
+    for i, feature in enumerate(features):
+        sns.histplot(data[feature], ax=axes[i, 0], bins=30, kde=True)
+        sns.boxplot(x=data[feature], ax=axes[i, 1])
+    plt.tight_layout()
+    plt.show()
+
+plot_feature_distributions(df)
+        </pre>
+        <br>
+        <strong>Results:</strong>
+        <ul>
+            <li><strong>Dataset Overview:</strong> Displayed first rows, statistical summary, and column data types. Checked for missing values (none found).</li>
+            <li><strong>Target Distribution:</strong> <code>price_range</code> is the target variable, visualized as a histogram for class balance.</li>
+            <li><strong>Correlation Analysis:</strong> Generated a correlation matrix heatmap to identify relationships between features.</li>
+            <li><strong>Automated Visualization:</strong> Histogram and box plot for each feature helped detect skewness, outliers, and feature distribution.</li>
+        </ul>
+        <br>
+        <strong>Conclusion:</strong>
+        <ul>
+            <li>Dataset is clean with no null values.</li>
+            <li>Strong correlations between some features were identified (e.g., <code>ram</code> and <code>price_range</code>).</li>
+            <li>Visualizations provided insights into data distribution and relationships, essential for feature selection and modeling.</li>
+        </ul>
+    </div>
+</li>
+
                 <a href="https://nbviewer.org/github/SubasishMula2001/Lab/blob/main/Experiment_2.ipynb" target="_blank">Experiment 2</a>
                 <span class="toggle-btn" onclick="toggleDescription('exp2-desc')">[+]</span>
                 <div id="exp2-desc" class="content">
